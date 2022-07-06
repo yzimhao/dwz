@@ -16,15 +16,18 @@ import (
 	"github.com/spf13/viper"
 )
 
+//go:embed templates/*
+var emfs embed.FS
+
 var (
 	rdc *redis.Client
 )
 
-func Run(emfs embed.FS) {
-	startGin(emfs)
+func Run() {
+	startGin()
 }
 
-func startGin(emfs embed.FS) {
+func startGin() {
 	viper.SetDefault("app.host", "0.0.0.0:8080")
 	viper.SetDefault("redis.host", "0.0.0.0:6379")
 	rdc = redis.NewClient(&redis.Options{
@@ -37,12 +40,12 @@ func startGin(emfs embed.FS) {
 
 func SetupRouter(emfs embed.FS) *gin.Engine {
 	router := gin.Default()
-	gin.SetMode(gin.DebugMode)
 
 	if viper.GetBool("app.debug") {
+		gin.SetMode(gin.DebugMode)
 		router.SetFuncMap(templateFuncMap())
-		router.LoadHTMLGlob("./templates/default/*.html")
-		router.StaticFS("statics", http.Dir("./templates/default/statics"))
+		router.LoadHTMLGlob("../templates/default/*.html")
+		router.StaticFS("statics", http.Dir("../templates/default/statics"))
 	} else {
 		// embed files
 		tmpl := template.New("").Funcs(templateFuncMap())

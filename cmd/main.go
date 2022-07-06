@@ -1,7 +1,6 @@
 package main
 
 import (
-	"embed"
 	"log"
 	"os"
 
@@ -10,9 +9,6 @@ import (
 	"github.com/yzimhao/dwz"
 	"github.com/yzimhao/utilgo/pack"
 )
-
-//go:embed templates/*
-var emfs embed.FS
 
 func main() {
 	viper.SetConfigFile("./config.toml")
@@ -27,7 +23,7 @@ func main() {
 		Flags: []cli.Flag{},
 		Action: func(c *cli.Context) error {
 
-			dwz.Run(emfs)
+			dwz.Run()
 			return nil
 		},
 		Commands: []*cli.Command{
