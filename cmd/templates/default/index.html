@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>{{ appInfo "appname" }} 短网址 {{ appInfo "version" }}</title>
+    <title>短网址服务</title>
     <link rel="stylesheet" type="text/css" href="/statics/libs/layui-v2.6.13/layui/css/layui.css" />
     <link rel="stylesheet" type="text/css" href="/statics/css/main.css" />
     
@@ -47,14 +47,21 @@
                 <div class="layui-row" style="margin-top: 50px;">
                     <div class="layui-col-md12">
                         <div class="url-item">                            
-                            <input type="text" name="result" autocomplete="off" class="layui-input http" value="" readonly>
+                            <input type="text" name="result" data-clipboard-text="" class="layui-input http" value="" readonly>
                         </div>
                     </div>
                     <div class="layui-col-md12">
                         <div class="url-item">                            
-                            <input type="text" name="result" autocomplete="off" class="layui-input https" value="" readonly>
+                            <input type="text" name="result" data-clipboard-text="" class="layui-input https" value="" readonly>
                         </div>
                     </div>
+                </div>
+
+                
+                <div class="layui-row" style="margin-top: 100px;">
+                    <blockquote class="layui-elem-quote layui-quote-nm">
+                        <p>* 链接不永久存储，默认30天删除，如果有人访问，将自动延期30天</p>
+                    </blockquote>
                 </div>
             </div>
 
@@ -63,7 +70,7 @@
 
 
             <div class="layui-footer footer">
-                <p>Copyright © 2022 <a href="https://github.com/yzimhao/dwz" target="_blank">{{ appInfo "appname" }} {{ appInfo "version" }}</a> MIT Licensed</p>
+                <p>Copyright © 2022 - <a href="https://github.com/yzimhao/dwz" target="_blank">{{ appInfo "appname" }} {{ appInfo "version" }}</a></p>
             </div>
 
         </div>
@@ -71,7 +78,7 @@
 
 
 
-
+<script src="/statics/libs/clipboard.min.js"></script>
 <script src="/statics/libs/layui-v2.6.13/layui/layui.js"></script>
 <script src="/statics/js/main.js"></script>
 <!--您的Layui代码start-->
@@ -102,11 +109,28 @@
                         var uri = window.location.host + "/" + d.data.dwz;
                         $("input.http").val("http://"+uri);
                         $("input.https").val("https://"+ uri);
+
+                        $("input.http").attr("data-clipboard-text", $("input.http").val());
+                        $("input.https").attr("data-clipboard-text", $("input.https").val());
                     }else{
                         layer.msg(d.msg);
                     }
                 }
             })
+        }).on("click", ".http", function(){
+            var clipboard = new ClipboardJS('.http');
+            clipboard.on("success", function(e){
+                clipboard.destroy();
+                e.clearSelection();
+                layer.msg("复制成功");
+            });
+        }).on("click", ".https", function(){
+            var clipboard = new ClipboardJS('.https');
+            clipboard.on("success", function(e){
+                clipboard.destroy();
+                e.clearSelection();
+                layer.msg("复制成功");
+            });
         });
 
 
