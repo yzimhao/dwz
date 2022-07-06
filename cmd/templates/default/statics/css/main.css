@@ -1,0 +1,54 @@
+
+.header {
+    background-color: #23262e;
+}
+
+.header .logo{
+    height: 60px; 
+    line-height: 60px; 
+    color:#fafafa; 
+    left: 10px; 
+    font-size: larger;
+}
+.header .logo .appVer {
+    font-size: small;
+    margin-left: 5px;
+    font-style: oblique;
+}
+
+.header .right-icon {
+    float: right;
+    text-align: right;
+}
+.header .right-icon a{
+    color: #fafafa;
+    height: 60px; 
+    line-height:60px; 
+    right:10px;
+    margin: 0px 10px 0px 10px;
+}
+
+
+.footer {
+    height: 50px; line-height:50px; background-color:#eee;
+    margin-top: 10px;
+}
+.footer p {
+    text-align: center;
+}
+
+
+.main-body {
+    padding-top: 60px;
+    min-height: 600px;
+}
+
+
+.main-body .url-item {
+    margin: 2px auto;
+    width: 400px;
+}
+.main-body .btn-item {
+    margin: 10px auto;
+    width: 80px;
+}
