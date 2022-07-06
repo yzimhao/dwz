@@ -4,6 +4,7 @@ services:
   postgres:
     image: postgres
     restart: always
+    privileged: true
     environment:
       POSTGRES_DB: test
       POSTGRES_USER: postgres
