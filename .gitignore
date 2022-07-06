@@ -17,3 +17,4 @@
 dist/
 postgresdata
 cmd/config.toml
+build.sh
