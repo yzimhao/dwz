@@ -6,7 +6,7 @@ services:
     restart: always
     privileged: true
     environment:
-      POSTGRES_DB: test
+      POSTGRES_DB: dwz
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
