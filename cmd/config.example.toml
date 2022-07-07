@@ -1,3 +1,8 @@
 [app]
 host="0.0.0.0:8080"
 expire_days=30
+debug=false
+name="Name"
+
+[redis]
+host="127.0.0.1:6379"
