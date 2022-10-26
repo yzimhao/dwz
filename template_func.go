@@ -4,14 +4,16 @@ import (
 	"html/template"
 	"time"
 
+	ginI18n "github.com/gin-contrib/i18n"
 	"github.com/spf13/viper"
 	"github.com/yzimhao/utilgo/pack"
 )
 
 func templateFuncMap() template.FuncMap {
 	return template.FuncMap{
-		"appInfo": appInfo,
-		"year":    year,
+		"Localize": ginI18n.GetMessage,
+		"appInfo":  appInfo,
+		"year":     year,
 	}
 }
 

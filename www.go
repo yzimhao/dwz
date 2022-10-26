@@ -9,10 +9,13 @@ import (
 	"net/url"
 	"regexp"
 
+	"github.com/BurntSushi/toml"
+	ginI18n "github.com/gin-contrib/i18n"
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis/v8"
 	"github.com/marksalpeter/token"
 	"github.com/spf13/viper"
+	"golang.org/x/text/language"
 )
 
 //go:embed templates/*
@@ -37,8 +40,32 @@ func startGin() {
 	router.Run(viper.GetString("app.host"))
 }
 
+// router.Use(GinI18nLocalize())
+func GinI18nLocalize() gin.HandlerFunc {
+	return ginI18n.Localize(
+		ginI18n.WithBundle(&ginI18n.BundleCfg{
+			RootPath:         "./lang",
+			AcceptLanguage:   []language.Tag{language.Chinese, language.English},
+			DefaultLanguage:  language.English,
+			FormatBundleFile: "toml",
+			UnmarshalFunc:    toml.Unmarshal,
+		}),
+		ginI18n.WithGetLngHandle(
+			func(context *gin.Context, defaultLng string) string {
+				lng := context.Query("lang")
+				if lng == "" {
+					return defaultLng
+				}
+				return lng
+			},
+		),
+	)
+}
+
 func SetupRouter(emfs embed.FS) *gin.Engine {
 	router := gin.Default()
+
+	router.Use(GinI18nLocalize())
 
 	if viper.GetBool("app.debug") {
 		gin.SetMode(gin.DebugMode)

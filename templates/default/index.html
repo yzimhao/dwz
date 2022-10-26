@@ -2,9 +2,9 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>{{ appInfo "appname" }}短网址服务</title>
-    <meta name="keywords" content="短网址,缩短网址,在线缩短网址,网址压缩,短网址生成," />
-    <meta name="description" content="{{ appInfo "appname" }}是一个简洁清爽、无广告的短网址服务" />
+    <title>{{ Localize "site_name" }} - {{ Localize "site_slogan" }}</title>
+    <meta name="keywords" content="{{ Localize "index_keywords" }}" />
+    <meta name="description" content="{{ Localize "index_description" }}" />
 
     <link rel="stylesheet" type="text/css" href="/statics/libs/layui-v2.6.13/layui/css/layui.css" />
     <link rel="stylesheet" type="text/css" href="/statics/css/main.css" />
@@ -26,7 +26,7 @@
     <div class="layui-main">
         <div class="layui-container">
             <div class="layui-header header">
-                <div class="layui-col-md2 logo"><span class="appName">{{ appInfo "appname" }}</span> </div>
+                <div class="layui-col-md2 logo"><span class="appName">{{ Localize "site_name" }}</span> </div>
                 <div class="layui-col-md2 right-icon">
                 </div>
             </div>
@@ -35,14 +35,14 @@
                 <div class="layui-row">
                     <div class="layui-col-md12">
                         <div class="url-item">                            
-                            <input type="text" name="url" required  lay-verify="required" placeholder="请输入网址" autocomplete="off" class="layui-input url">                            
+                            <input type="text" name="url" required  lay-verify="required" placeholder="{{ Localize "text1" }}" autocomplete="off" class="layui-input url">                            
                         </div>
                     </div>
                 </div>
                 <div class="layui-row">
                     <div class="layui-col-md12">
                         <div class="btn-item">
-                            <button type="button" class="layui-btn generate">缩短网址</button>
+                            <button type="button" class="layui-btn generate">{{ Localize "text2" }}</button>
                         </div>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
 
                 <div class="layui-row" style="margin-top: 100px;">
                     <div class="layui-col-md12 index-links">
-                        <p>Recent:</p>
+                        <p>{{ Localize "text3" }}</p>
                         <ul></ul>
                     </div>
                 </div>
@@ -80,7 +80,7 @@
 
 
             <div class="layui-footer footer">
-                <p>Copyright © 2022 - {{ year }}<a href="https://github.com/yzimhao/dwz" target="_blank">{{ appInfo "appname" }}</a></p>
+                <p>Copyright © 2022 - {{ year }} <a href="https://github.com/yzimhao/dwz" target="_blank">{{ appInfo "appname" }}</a></p>
             </div>
 
         </div>
