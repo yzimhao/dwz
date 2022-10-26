@@ -151,14 +151,14 @@
             clipboard.on("success", function(e){
                 clipboard.destroy();
                 e.clearSelection();
-                layer.msg("复制成功");
+                layer.msg('{{ Localize "text4" }}');
             });
         }).on("click", ".https", function(){
             var clipboard = new ClipboardJS('.https');
             clipboard.on("success", function(e){
                 clipboard.destroy();
                 e.clearSelection();
-                layer.msg("复制成功");
+                layer.msg('{{ Localize "text4" }}');
             });
         });
 
