@@ -3,6 +3,7 @@ TARGET=dwz
 
 
 build: linux_amd64
+.PHONY: build
 
 all: linux_amd64 windows_amd64 darwin_amd64 darwin_arm64
 
