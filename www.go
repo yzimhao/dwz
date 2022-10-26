@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"net/url"
 	"regexp"
-	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-redis/redis/v8"
@@ -60,6 +59,7 @@ func SetupRouter(emfs embed.FS) *gin.Engine {
 	apiV1 := router.Group("/api/v1")
 	{
 		apiV1.GET("/create", create)
+		apiV1.GET("/index_links", index_links)
 	}
 	return router
 }
@@ -112,11 +112,17 @@ func create(c *gin.Context) {
 		"dwz": code,
 	}
 
-	//
-	expire := time.Duration(viper.GetInt("app.expire_days")*24*3600) * time.Second
-	rdc.Set(rdc.Context(), "code:"+code, paramUrl, expire)
+	rdc.Set(rdc.Context(), "code:"+code, paramUrl, -1)
+	rdc.SAdd(rdc.Context(), "urls", code)
 
 	result(c, callback, resp{Ok: true, Data: &data})
+}
+
+func index_links(c *gin.Context) {
+	callback := c.Query("callback")
+	cmd := rdc.SRandMemberN(rdc.Context(), "urls", 100)
+	rows := cmd.Val()
+	result(c, callback, resp{Ok: true, Data: rows})
 }
 
 func result(c *gin.Context, callback string, resp2 resp) {

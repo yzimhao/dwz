@@ -49,22 +49,29 @@
 
                 <div class="layui-row" style="margin-top: 50px;">
                     <div class="layui-col-md12">
-                        <div class="url-item">                            
-                            <input type="text" name="result" data-clipboard-text="" class="layui-input http" value="" readonly>
+                        <div class="url-item">
+                            <input type="text" name="result" data-clipboard-text="" class="layui-input http" value="" placeholder="http://" readonly>
                         </div>
                     </div>
                     <div class="layui-col-md12">
-                        <div class="url-item">                            
-                            <input type="text" name="result" data-clipboard-text="" class="layui-input https" value="" readonly>
+                        <div class="url-item">
+                            <input type="text" name="result" data-clipboard-text="" class="layui-input https" value="" placeholder="https://" readonly>
                         </div>
                     </div>
                 </div>
 
-                
                 <div class="layui-row" style="margin-top: 100px;">
-                    <blockquote class="layui-elem-quote layui-quote-nm">
+                    <div class="layui-col-md12 index-links">
+                        <p>Recent:</p>
+                        <ul></ul>
+                    </div>
+                </div>
+
+
+                <div class="layui-row" style="margin-top: 100px;">
+                    <!-- <blockquote class="layui-elem-quote layui-quote-nm">
                         <p>* 链接不永久存储，默认30天删除，如果有人访问，将自动延期30天</p>
-                    </blockquote>
+                    </blockquote> -->
                 </div>
             </div>
 
@@ -73,7 +80,7 @@
 
 
             <div class="layui-footer footer">
-                <p>Copyright © 2022 - <a href="https://github.com/yzimhao/dwz" target="_blank">{{ appInfo "appname" }}</a></p>
+                <p>Copyright © 2022 - {{ year }}<a href="https://github.com/yzimhao/dwz" target="_blank">{{ appInfo "appname" }}</a></p>
             </div>
 
         </div>
@@ -95,6 +102,25 @@
             , upload = layui.upload
             , table = layui.table
             , element = layui.element;
+
+
+        var loadIndexLinks = function(){
+            $.ajax({
+                "url":"/api/v1/index_links",
+                "type": "GET",
+                "dataType": "json",
+                "success": function(d){
+                    var html = "";
+                    for(var i=0; i<d.data.length;i++){
+                        html += "<li><a href='/"+d.data[i]+"' target='_blank'>"+d.data[i]+"</a></li>";
+                    }
+
+                    $(".index-links ul").html(html);
+                }
+            })
+        };
+        loadIndexLinks();
+
         
         $(document).on("click", ".generate", function(){
             var url = $("input[name=url]").val();
