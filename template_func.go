@@ -12,18 +12,19 @@ import (
 func templateFuncMap() template.FuncMap {
 	return template.FuncMap{
 		"Localize": ginI18n.GetMessage,
-		"appInfo":  appInfo,
+		"configs":  configs,
 		"year":     year,
+		"unsafe":   unsafe,
 	}
 }
 
-func appInfo(key string) string {
+func configs(key string) string {
 	v := ""
 	switch key {
-	case "appname":
-		v = viper.GetString("app.name")
 	case "version":
 		v = pack.Version
+	default:
+		v = viper.GetString(key)
 	}
 	return v
 }
@@ -31,4 +32,8 @@ func appInfo(key string) string {
 func year() string {
 	now := time.Now().Format("2006")
 	return now
+}
+
+func unsafe(str string) template.HTML {
+	return template.HTML(str)
 }
