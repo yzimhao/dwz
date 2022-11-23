@@ -103,9 +103,7 @@ func index(c *gin.Context) {
 
 func view(c *gin.Context) {
 	code := c.Param("key")
-	fmt.Println(code)
 	url := rdc.Get(rdc.Context(), "code:"+code).Val()
-	fmt.Println(url)
 	h := html.NewHtml(url)
 
 	c.HTML(http.StatusOK, "view.html", gin.H{
