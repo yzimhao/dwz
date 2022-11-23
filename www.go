@@ -15,6 +15,7 @@ import (
 	"github.com/go-redis/redis/v8"
 	"github.com/marksalpeter/token"
 	"github.com/spf13/viper"
+	"github.com/yzimhao/dwz/utils/html"
 	"golang.org/x/text/language"
 )
 
@@ -83,6 +84,7 @@ func SetupRouter(emfs embed.FS) *gin.Engine {
 	router.GET("/", index)
 	router.GET("/ping", ping)
 	router.GET("/:key", redirect)
+	router.GET("/view/:key", view)
 	apiV1 := router.Group("/api/v1")
 	{
 		apiV1.GET("/create", create)
@@ -97,6 +99,22 @@ func ping(c *gin.Context) {
 
 func index(c *gin.Context) {
 	c.HTML(http.StatusOK, "index.html", nil)
+}
+
+func view(c *gin.Context) {
+	code := c.Param("key")
+	fmt.Println(code)
+	url := rdc.Get(rdc.Context(), "code:"+code).Val()
+	fmt.Println(url)
+	h := html.NewHtml(url)
+
+	c.HTML(http.StatusOK, "view.html", gin.H{
+		"url":         h.Url(),
+		"title":       h.Title(),
+		"keyword":     h.Keyword(),
+		"description": h.Description(),
+		"source":      h.Source(),
+	})
 }
 
 func redirect(c *gin.Context) {

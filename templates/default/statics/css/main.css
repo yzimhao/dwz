@@ -28,6 +28,9 @@
     margin: 0px 10px 0px 10px;
 }
 
+.white {
+    color: #ffffff!important;
+}
 
 .footer {
     height: 50px; line-height:50px; background-color:#eee;

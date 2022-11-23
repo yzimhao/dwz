@@ -111,7 +111,7 @@
                 "success": function(d){
                     var html = "";
                     for(var i=0; i<d.data.length;i++){
-                        html += "<li><a href='/"+d.data[i]+"' target='_blank'>"+d.data[i]+"</a></li>";
+                        html += "<li><a href='/view/"+d.data[i]+"' target='_blank'>"+d.data[i]+"</a></li>";
                     }
 
                     $(".index-links ul").html(html);
