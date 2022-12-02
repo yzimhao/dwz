@@ -1,24 +1,15 @@
-/*
-* date: 2019-04-25 10:01
-* author: liaodong
-* email: liaoshp@qq.com
- */
-
 package models
 
 import (
 	"time"
-
-	"github.com/marksalpeter/token"
 )
 
 type Url struct {
 	Id         int64  `xorm:"pk autoincr"`
 	Code       string `xorm:"varchar(15) index(code) unique(urlcode)"`
 	Target     string `xorm:"varchar(3000)"`
-	Hijeck     string `xorm:"varchar(3000) default('')"`
-	Title      string `xorm:"varchar(500) default('')"`
 	PageTitle  string `xorm:"varchar(500) default('')"`
+	Source     string `xorm:"text"`
 	UserId     int64
 	Expire     int64
 	Status     int
@@ -52,10 +43,4 @@ type RequestLog struct {
 	BrowserVer   string `xorm:"varchar(30)"`
 
 	CreateTime time.Time `xorm:"created index(ctime)" json:"create_time"`
-}
-
-func GetCode() string {
-	// 默认生成code长度为5的短网址
-	code := token.New(5)
-	return code.Encode()
 }
